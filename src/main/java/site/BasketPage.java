@@ -18,12 +18,12 @@ public class BasketPage {
         return driver.findElement(productName).getAttribute("textContent");
     }
 
-    public Integer getProductQuantity(){
+    public int getProductQuantity(){
         return Integer.parseInt(driver.findElement(productQuantity).getAttribute("value").toString());
     }
 
     public String getProductPrice(){
-        return driver.findElement(productPrice).getAttribute("outerText").toString().replace(" ₴", "");
+        return driver.findElement(productPrice).getAttribute("outerText").toString().replace(" ₴", "");
     }
 
     public void clickOrderingBtn(){

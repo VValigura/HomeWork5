@@ -18,7 +18,7 @@ public class OrderConfirmationPage {
         return driver.findElement(configurationTitle).getAttribute("outerText").replace("\uE876", "");
     }
 
-    public Integer getProductQuantity(){
+    public int getProductQuantity(){
         return Integer.parseInt(driver.findElement(productQuantity).getAttribute("textContent"));
     }
 

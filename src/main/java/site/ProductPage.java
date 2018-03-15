@@ -26,7 +26,7 @@ public class ProductPage {
         return driver.findElement(productPrice).getAttribute("outerText").toString().replace(" ₴", "");
     }
 
-    public Integer getAllProductsQuantity(){
+    public int getAllProductsQuantity(){
         return Integer.parseInt(driver.findElement(allProductQuantity).getAttribute("textContent").toString().replace(" Товары", "").replace(" Товар", ""));
     }
 

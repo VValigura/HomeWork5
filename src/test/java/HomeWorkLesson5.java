@@ -94,9 +94,9 @@ private BrowserVersion browserVersion;
         productPage.clickOrderingByModalBtn();
 
         BasketPage basketPage = new BasketPage(driver);
-        Assert.assertTrue(basketPage.getProductName().equals(productName), "Incorrect product name in basket page!");
-        Assert.assertTrue(basketPage.getProductPrice().equals(productPrice), "Incorrect product price in basket page!");
-        Assert.assertTrue(basketPage.getProductQuantity().equals(1), "Incorrect product quantity in basket page!!");
+        Assert.assertEquals(basketPage.getProductName(), productName, "Incorrect product name in basket page!");
+        Assert.assertEquals(basketPage.getProductPrice(), productPrice, "Incorrect product price in basket page!");
+        Assert.assertEquals(basketPage.getProductQuantity(), 1, "Incorrect product quantity in basket page!!");
         basketPage.clickOrderingBtn();
 
         OrderingPage orderingPage = new OrderingPage(driver);
@@ -109,10 +109,10 @@ private BrowserVersion browserVersion;
         Assert.assertTrue(orderConfirmationPage.getConfigurationTitle().equalsIgnoreCase("Ваш заказ подтверждён"), "Incorrect product title in order confirmation page!");
         Assert.assertTrue(orderConfirmationPage.getProductName().contains(productName), "Incorrect name title in order confirmation page!");
         Assert.assertTrue(orderConfirmationPage.getProductPrice().contains(productPrice), "Incorrect price in order confirmation page!");
-        Assert.assertTrue(orderConfirmationPage.getProductQuantity().equals(1), "Incorrect quantity in order confirmation page!");
+        Assert.assertEquals(orderConfirmationPage.getProductQuantity(), 1, "Incorrect quantity in order confirmation page!");
 
         driver.get(productUrl);
-        Assert.assertTrue(productPage.getAllProductsQuantity().equals((productsQuantity - 1)), "Incorrect quantity in product page after selling product!");
+        Assert.assertEquals(productPage.getAllProductsQuantity(), (productsQuantity - 1), "Incorrect quantity in product page after selling product!");
 
     }
 
