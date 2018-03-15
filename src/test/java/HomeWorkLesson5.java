@@ -2,10 +2,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import site.BrowserVersion;
-import site.InitWebDriver;
-import site.MainPage;
-import site.WebDriverLogger;
+import site.*;
+
+import java.util.Date;
 
 public class HomeWorkLesson5 {
 //    https://bitbucket.org/qatestlab_automation/lecture-5
@@ -13,27 +12,27 @@ public class HomeWorkLesson5 {
 //    Автоматизировать следующий сценарий:
 //Часть А. Проверка открываемой версии магазина:
 //
-//            1. Перейти на главную страницу магазина.
-//            2. Удостовериться, что пользователю отображается корректная версия сайта (обычная версия сайта с использованием настольного браузера, мобильная версия сайта с
-//              спользованием мобильного браузера.)
+//+            1. Перейти на главную страницу магазина.
+//+            2. Удостовериться, что пользователю отображается корректная версия сайта (обычная версия сайта с использованием настольного браузера, мобильная версия сайта с
+//+              спользованием мобильного браузера.)
 //
 //Часть Б. Оформление заказа в магазине:
-//            1. Перейти на главную страницу магазина.
-//            2. Перейти к списку всех товаров воспользовавшись ссылкой «Все товары»
-//            3. Открыть случайный товар из отображаемого списка.
-//            4. Добавить товар в корзину.
-//            5. В сплывающем окне нажать на кнопку «Перейти к оформлению» для перехода в корзину пользователя.
-//            6. Проверить, что в корзине отображается одна позиция, название и цена добавленного товара соответствует значениям, которые отображались на странице товара.
-//            7. Нажать на кнопку «Оформление заказа».
-//            8. Заполнить поля Имя, Фамилия, E-mail (должно быть уникальным) и перейти к следующему шагу оформления заказа.
-//            9. Указать адрес, почтовый индекс, город доставки. Перейти к следующему шагу.
-//            10. Оставить настройки доставки без изменений, перейти к шагу оплаты заказа.
-//            11. Выбрать любой способ оплаты. Отметить опцию «Я ознакомлен(а) и согласен(на) с Условиями обслуживания.» Оформить заказ.
-//            12. В открывшемся окне подтверждения заказа проверить следующие значения:
-//            - Пользователю отображается сообщение «Ваш заказ подтвержден»
-//            - В деталях заказа отображается одна позиция, название и цена товара соответствует значениям, которые отображались на странице товара.
-//            13. Вернуться на страницу товара и проверить изменения количества товара в наличии (в блоке справа, на вкладке «Подробнее о товаре»): количество товара должно
-//              уменьшиться на единицу.
+//+             1. Перейти на главную страницу магазина.
+//+            2. Перейти к списку всех товаров воспользовавшись ссылкой «Все товары»
+//+            3. Открыть случайный товар из отображаемого списка.
+//+            4. Добавить товар в корзину.
+//+            5. В сплывающем окне нажать на кнопку «Перейти к оформлению» для перехода в корзину пользователя.
+//+            6. Проверить, что в корзине отображается одна позиция, название и цена добавленного товара соответствует значениям, которые отображались на странице товара.
+//+            7. Нажать на кнопку «Оформление заказа».
+//+            8. Заполнить поля Имя, Фамилия, E-mail (должно быть уникальным) и перейти к следующему шагу оформления заказа.
+//+            9. Указать адрес, почтовый индекс, город доставки. Перейти к следующему шагу.
+//+            10. Оставить настройки доставки без изменений, перейти к шагу оплаты заказа.
+//+            11. Выбрать любой способ оплаты. Отметить опцию «Я ознакомлен(а) и согласен(на) с Условиями обслуживания.» Оформить заказ.
+//+            12. В открывшемся окне подтверждения заказа проверить следующие значения:
+//+            - Пользователю отображается сообщение «Ваш заказ подтвержден»
+//+            - В деталях заказа отображается одна позиция, название и цена товара соответствует значениям, которые отображались на странице товара.
+//+            13. Вернуться на страницу товара и проверить изменения количества товара в наличии (в блоке справа, на вкладке «Подробнее о товаре»): количество товара должно
+//+              уменьшиться на единицу.
 //
 //    Настройте выполнение тестового скрипта таким образом, чтобы при вызове выполнения тестов (mvn test) он выполнился на разных браузерах: Chrome, Firefox, Internet Explorer,
 //      на мобильном устройстве Android. Для этого можно в testng.xml воспользоваться возможностью передачи параметров.
@@ -71,13 +70,52 @@ private BrowserVersion browserVersion;
     }
 
     @Test
-    public void createProduct(){
+    public void CheckCorrectBrowserVersionOpened(){
         MainPage mainPage = new MainPage(driver);
         mainPage.openPage();
         Assert.assertTrue(mainPage.isCorrectBrowserVersionOpened(browserVersion), "Incorrect version of the browser is open!");
+    }
 
+    @Test
+    public void makeOrder(){
+        MainPage mainPage = new MainPage(driver);
+        mainPage.openPage();
+        mainPage.clickAllProductLink();
+        new AllProductPage(driver).openRandomProduct();
+
+
+        ProductPage productPage = new ProductPage(driver);
+        String productUrl = driver.getCurrentUrl();
+        String productName = productPage.getProductName();
+        String productPrice = productPage.getProductPrice();
+        Integer productsQuantity = productPage.getAllProductsQuantity();
+
+        productPage.addProductToBasket();
+        productPage.clickOrderingByModalBtn();
+
+        BasketPage basketPage = new BasketPage(driver);
+        Assert.assertTrue(basketPage.getProductName().equals(productName), "Incorrect product name in basket page!");
+        Assert.assertTrue(basketPage.getProductPrice().equals(productPrice), "Incorrect product price in basket page!");
+        Assert.assertTrue(basketPage.getProductQuantity().equals(1), "Incorrect product quantity in basket page!!");
+        basketPage.clickOrderingBtn();
+
+        OrderingPage orderingPage = new OrderingPage(driver);
+        orderingPage.inputPersonalDataAndContinue("FirstName", "SecondName", new Date().getTime()+"@test.com");
+        orderingPage.inputAddressDataAndContinue("Address", "12345", "City");
+        orderingPage.clickContinueConfirmDeliveryOptionBtn();
+        orderingPage.choosePaymentWayAndFinishOrder();
+
+        OrderConfirmationPage orderConfirmationPage = new OrderConfirmationPage(driver);
+        Assert.assertTrue(orderConfirmationPage.getConfigurationTitle().equalsIgnoreCase("Ваш заказ подтверждён"), "Incorrect product title in order confirmation page!");
+        Assert.assertTrue(orderConfirmationPage.getProductName().contains(productName), "Incorrect name title in order confirmation page!");
+        Assert.assertTrue(orderConfirmationPage.getProductPrice().contains(productPrice), "Incorrect price in order confirmation page!");
+        Assert.assertTrue(orderConfirmationPage.getProductQuantity().equals(1), "Incorrect quantity in order confirmation page!");
+
+        driver.get(productUrl);
+        Assert.assertTrue(productPage.getAllProductsQuantity().equals((productsQuantity - 1)), "Incorrect quantity in product page after selling product!");
 
     }
+
 
     @AfterMethod
     public void closeDriver(){
