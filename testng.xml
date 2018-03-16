@@ -26,5 +26,33 @@
         </classes>
     </test>
 
+    <test name="Test_remoteFireFox">
+        <parameter name="browser" value="remoteFireFox"></parameter>
+        <classes>
+            <class name="HomeWorkLesson5"/>
+        </classes>
+    </test>
+
+    <test name="Test_remoteChrome">
+        <parameter name="browser" value="remoteChrome"></parameter>
+        <classes>
+            <class name="HomeWorkLesson5"/>
+        </classes>
+    </test>
+
+    <test name="Test_remoteIE">
+        <parameter name="browser" value="remoteIE"></parameter>
+        <classes>
+            <class name="HomeWorkLesson5"/>
+        </classes>
+    </test>
+
+    <test name="Test_android">
+        <parameter name="browser" value="android"></parameter>
+        <classes>
+            <class name="HomeWorkLesson5"/>
+        </classes>
+    </test>
+
 
 </suite>

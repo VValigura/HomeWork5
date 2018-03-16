@@ -35,6 +35,12 @@
             <version>RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -65,6 +65,18 @@ private BrowserVersion browserVersion;
         } else if (browser.equals("IE")){
             webDriver = InitWebDriver.initIEDriver();
             browserVersion = browserVersion.DESKTOP_VERSION;
+        } else if (browser.equals("remoteChrome")){
+            webDriver = InitWebDriver.initRemoteChrome();
+            browserVersion = browserVersion.DESKTOP_VERSION;
+        } else if (browser.equals("remoteIE")){
+            webDriver = InitWebDriver.initRemoteIE();
+            browserVersion = browserVersion.DESKTOP_VERSION;
+        } else if (browser.equals("remoteFireFox")){
+            webDriver = InitWebDriver.initRemoteFireFoxDriver();
+            browserVersion = browserVersion.DESKTOP_VERSION;
+        } else if (browser.equals("android")){
+            webDriver =  InitWebDriver.initRemoteAndroid();
+            browserVersion = browserVersion.MOBILE_VERSION;
         }
         driver = new EventFiringWebDriver(webDriver).register(new WebDriverLogger());
     }
@@ -115,7 +127,6 @@ private BrowserVersion browserVersion;
         Assert.assertEquals(productPage.getAllProductsQuantity(), (productsQuantity - 1), "Incorrect quantity in product page after selling product!");
 
     }
-
 
     @AfterMethod
     public void closeDriver(){
